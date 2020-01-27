@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include <sys/wait.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -67,10 +68,12 @@ int main() {
 	for(int i = 1; i < count; i++){
 		if(fork()==0){ //Check to see if process is a child if so break
 			break;	
+		}else{
+			while(parallel == FALSE && wait(NULL)>0);
 		}
-		sleep(1);
+		
 	}
-	sleep(1);
+	
         execvp(cmdTokens[0], cmdTokens); // replaces the current process with the given program
         // doesn't return unless the calling failed
         printf("Can't execute %s\n", cmdTokens[0]); // only reached if running the program failed
