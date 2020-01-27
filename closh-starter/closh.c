@@ -1,5 +1,5 @@
 // closh.c - COSC 315, Winter 2020
-// Courtney Gosselin
+// Courtney Gosselin, Ben Tisserand, Alex Qin
 
 #include <stdio.h>
 #include <unistd.h>
@@ -65,12 +65,12 @@ int main() {
         
         // Loops through the fork command based on the number entered in count
 	for(int i = 1; i < count; i++){
-		sleep(1);
 		if(fork()==0){ //Check to see if process is a child if so break
 			break;	
 		}
+		sleep(1);
 	}
-
+	sleep(1);
         execvp(cmdTokens[0], cmdTokens); // replaces the current process with the given program
         // doesn't return unless the calling failed
         printf("Can't execute %s\n", cmdTokens[0]); // only reached if running the program failed
