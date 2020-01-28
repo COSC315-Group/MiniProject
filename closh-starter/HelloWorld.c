@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 int main(){
+	sleep(3);
 	printf("Hello, World!\n");
-	sleep(1);
 	return 0;
 }

@@ -7,6 +7,7 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <time.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -64,12 +65,26 @@ int main() {
         //                                                    //
         // /////////////////////////////////////////////////////
         
+	// Initialize time and child variables
+	time_t baseTime;
+	pid_t childId;
+
         // Loops through the fork command based on the number entered in count
+	
 	for(int i = 1; i < count; i++){
-		if(fork()==0){ //Check to see if process is a child if so break
+		
+		if((childId = fork())==0){ //Check to see if process is a child. If so, leave loop
 			break;	
-		}else{
-			while(parallel == FALSE && wait(NULL)>0);
+		}else if(parallel == FALSE){ //If not running in parallel mode, create while loop that monitors childs status
+			time(&baseTime); // set basetime to now
+			while(waitpid(-1,NULL,WNOHANG)>=0){ // We use WNOHANG to ensure our while loop runs while waiting for the child
+				
+				if(timeout>0 && baseTime - time(NULL) + timeout<0){ // If we have exceeded the basetime by the timeout, kill child
+					kill(childId,SIGKILL);
+					printf("Process ID %d has timed out and been terminated.\n",childId);
+					break;
+				}
+			}
 		}
 		
 	}
