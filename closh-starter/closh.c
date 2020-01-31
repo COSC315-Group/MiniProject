@@ -13,14 +13,15 @@
 #define TRUE 1
 #define FALSE 0
 
-void parallelTimeoutAlarm(pid_t id, time_t baseTime, int timeout){
-         if(fork()==0){
-         	// If we are the child, our job is to monitor the timeout until the process is done or times out
-         	while(waitpid(id,NULL,WNOHANG>=0)){
-			//printf("basetime: %d, currenttime: %d, timeout: %d\n%d",baseTime,time(NULL),timeout,baseTime - time(NULL) + timeout);
+void parallelTimeoutAlarm(time_t baseTime, int timeout){
+	pid_t childId;
+         if((childId = fork())!=0){
+         	// If we are the parent, our job is to monitor the timeout until the process is done or times out
+         	while(waitpid(-1,NULL,WNOHANG)>=0){
+			//printf("%d\n",waitpid(id,NULL,WNOHANG));
          		if(baseTime - time(NULL) + timeout < 0){
-         			kill(id,SIGKILL);
-         			printf("Process ID %d has timed out and been terminated.\n",id);
+         			kill(childId,SIGKILL);
+         			printf("Process ID %d has timed out and been terminated.\n",childId);
          			break;
          		}
          	}
@@ -87,12 +88,10 @@ int main() {
 	pid_t childId;
 
         // Loops through the fork command based on the number entered in count
-	if(parallel == TRUE){
-		parallelTimeoutAlarm(getpid(),time(&baseTime),timeout);
-	}
-	for(int i = 1; i < count; i++){
+	for(int i = 0; i < count; i++){
 		
 		if((childId = fork())==0){ //Check to see if process is a child. If so, leave loop
+			parallelTimeoutAlarm(time(NULL),timeout);
 			break;	
 		}else if(parallel == FALSE){ //If not running in parallel mode, create while loop that monitors childs status
 			time(&baseTime); // set basetime to now
@@ -108,10 +107,12 @@ int main() {
 		
 	}
 	
-        execvp(cmdTokens[0], cmdTokens); // replaces the current process with the given program
-        // doesn't return unless the calling failed
-        printf("Can't execute %s\n", cmdTokens[0]); // only reached if running the program failed
-        exit(1);        
+	if(childId==0){
+        	execvp(cmdTokens[0], cmdTokens); // replaces the current process with the given program
+        	// doesn't return unless the calling failed
+        	printf("Can't execute %s\n", cmdTokens[0]); // only reached if running the program failed
+	}
+	exit(1);        
     }
 }
 
