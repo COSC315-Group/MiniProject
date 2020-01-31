@@ -8,9 +8,26 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <time.h>
+#include <sys/types.h>
 
 #define TRUE 1
 #define FALSE 0
+
+void parallelTimeoutAlarm(pid_t id, time_t baseTime, int timeout){
+         if(fork()==0){
+         	// If we are the child, our job is to monitor the timeout until the process is done or times out
+         	while(waitpid(id,NULL,WNOHANG>=0)){
+			//printf("basetime: %d, currenttime: %d, timeout: %d\n%d",baseTime,time(NULL),timeout,baseTime - time(NULL) + timeout);
+         		if(baseTime - time(NULL) + timeout < 0){
+         			kill(id,SIGKILL);
+         			printf("Process ID %d has timed out and been terminated.\n",id);
+         			break;
+         		}
+         	}
+         	exit(1);
+         }
+         return;
+}
 
 // tokenize the command string into arguments - do not modify
 void readCmdTokens(char* cmd, char** cmdTokens) {
@@ -70,7 +87,9 @@ int main() {
 	pid_t childId;
 
         // Loops through the fork command based on the number entered in count
-	
+	if(parallel == TRUE){
+		parallelTimeoutAlarm(getpid(),time(&baseTime),timeout);
+	}
 	for(int i = 1; i < count; i++){
 		
 		if((childId = fork())==0){ //Check to see if process is a child. If so, leave loop
