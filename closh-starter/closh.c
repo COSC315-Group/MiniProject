@@ -94,8 +94,8 @@ int main() {
 	for(int i = 0; i < count; i++){
 		
 		if((childId = fork())==0){ //Check to see if process is a child. If so, leave loop
-			if(timeout>0 && parallel == TRUE){
-				parallelTimeoutAlarm(time(NULL),timeout);
+			if(timeout>0 && parallel == TRUE){ // If we are in parallel mode with a timeout, initiate parallelTimeoutAlarm
+				parallelTimeoutAlarm(time(NULL),timeout); // FUNCTION found at start of this file
 			}
 			printf("Executing Process ID: %d\n",getpid());
 			break;	
