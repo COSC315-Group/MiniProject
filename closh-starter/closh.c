@@ -94,7 +94,10 @@ int main() {
 	for(int i = 0; i < count; i++){
 		
 		if((childId = fork())==0){ //Check to see if process is a child. If so, leave loop
-			parallelTimeoutAlarm(time(NULL),timeout);
+			if(timeout>0 && parallel == TRUE){
+				parallelTimeoutAlarm(time(NULL),timeout);
+			}
+			printf("Executing Process ID: %d\n",getpid());
 			break;	
 		}else if(parallel == FALSE){ //If not running in parallel mode, create while loop that monitors childs status
 			time(&baseTime); // set basetime to now
