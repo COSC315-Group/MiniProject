@@ -13,18 +13,21 @@
 #define TRUE 1
 #define FALSE 0
 
+// function to timeout processes that are running in parallel
 void parallelTimeoutAlarm(time_t baseTime, int timeout){
 	pid_t childId;
          if((childId = fork())!=0){
          	// If we are the parent, our job is to monitor the timeout until the process is done or times out
-         	while(waitpid(-1,NULL,WNOHANG)>=0){
-			//printf("%d\n",waitpid(id,NULL,WNOHANG));
+         	while(waitpid(-1,NULL,WNOHANG)>=0){ // Don't wait on the child to be finished. Instead monitor the runtime incase it exceeds timeout
+			
          		if(baseTime - time(NULL) + timeout < 0){
+				// if timeout is exceeded, kill the child with SIGKILL
          			kill(childId,SIGKILL);
          			printf("Process ID %d has timed out and been terminated.\n",childId);
          			break;
          		}
          	}
+		// This parent process purpose is fulfilled, exit
          	exit(1);
          }
          return;
@@ -106,7 +109,7 @@ int main() {
 		}
 		
 	}
-	
+	// Only run the program on the children (this allows us to more easily monitor timeouts on the executing processes)
 	if(childId==0){
         	execvp(cmdTokens[0], cmdTokens); // replaces the current process with the given program
         	// doesn't return unless the calling failed
