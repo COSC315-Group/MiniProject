@@ -1,6 +1,7 @@
 # Closh.c COSC 315 - Mini Project 1
 
-One Paragraph of project description goes here
+The C program ‘closh’ works by taking the inputs program, count, run type (parallel or sequential), and timeout. For the program input, we created a test program ‘HelloWorld’, which can be used as the argument with the syntax “./HelloWorld”. However, hostname, pwd, echo, etc are all options that could be used as the program name being inputted as well. The next input - count - decides how many of the named processes are going to be created, accepting an integer from 1 to 9. The following input asks the user for a character, ‘s’ or ‘p’, to choose if the created processes are to run in sequence or in parallel respectively. Finally, it asks if you would like to define a timeout value. The inputted integer 0-9 denotes the seconds after which the processes will time out and be terminated; an inputted value of 0 results in no timeout. The whole program is to take in a process and run it for a specific count either sequentially or concurrently in parallel and to do this for a specific time 1-9 seconds or until it is finished.
+
 
 ## Getting Started
 
@@ -32,42 +33,24 @@ until finished
 
 End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [C](https://www.gnu.org/software/libc/manual/pdf/libc.pdf) - Programming Language
+* [Linux - Debian](https://www.debian.org/doc/) - OS/Terminal 
+* [GCC](https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/) - How we compiled our C programs
+* [Vim](https://www.vim.org/docs.php)IDE
+* [Visual Studio Code](https://code.visualstudio.com/docs) IDE used for .md files
 
-## Authors
+## Contributers
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
+* Benjamin Tisserand @UBCbent
+* Courtney Gosselin @CourtneyGosselin
+* Alex Qin @QinAlex
+* Dr. Apurva Narayan provided base closh.c code seen in the closh-starter.tar.gz file
 
 ## Acknowledgments
 
