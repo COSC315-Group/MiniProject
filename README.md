@@ -35,14 +35,14 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Add additional notes about how to deploy this on a live system and how it runs
 
 ## Built With
 
 * [C](https://www.gnu.org/software/libc/manual/pdf/libc.pdf) - Programming Language
 * [Linux - Debian](https://www.debian.org/doc/) - OS/Terminal 
 * [GCC](https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/) - How we compiled our C programs
-* [Vim](https://www.vim.org/docs.php)IDE
+* [Vim](https://www.vim.org/docs.php) IDE
 * [Visual Studio Code](https://code.visualstudio.com/docs) IDE used for .md files
 
 ## Contributers
