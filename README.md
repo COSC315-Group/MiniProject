@@ -5,37 +5,12 @@ The C program ‘closh’ works by taking the inputs program, count, run type (p
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system and how it runs
+1. Clone this repository to your local machine.
+2. Run the program by using the command "./closh"
+3. Input a program (in our example, we use the argument "./HelloWorld")
+4. Input a count, specifying the number of times you want it to execute (1-9)
+5. Input a character, s or p, denoting if you want to to run sequentially or in parallel respectively
+6. Input a timeout value (0 if no timeout) to specify a time after which the process should be force closed (1-9)
 
 ## Built With
 
@@ -51,11 +26,3 @@ Add additional notes about how to deploy this on a live system and how it runs
 * Courtney Gosselin @CourtneyGosselin
 * Alex Qin @QinAlex
 * Dr. Apurva Narayan provided base closh.c code seen in the closh-starter.tar.gz file
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* Tutorials watched
-* Snippets of code we built from
-* etc
